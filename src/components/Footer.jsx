@@ -43,31 +43,27 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
+    <footer className="border-t border-[color:var(--line)] bg-[color:var(--surface)]/90 backdrop-blur-xl">
+      <div className="mx-auto w-[min(1120px,92vw)] py-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           <div className="space-y-4">
-            <span className="text-xl font-bold text-primary">
-              &lt;Dev/&gt;
-            </span>
-            <p className="text-gray-400 text-sm">
+            <span className="font-display text-xl font-bold text-[color:var(--brand)]">&lt;Dev/&gt;</span>
+            <p className="text-sm text-[color:var(--muted)]">
               Full Stack Developer passionate about building modern web applications
               and creating impactful digital experiences.
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-300">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--muted)]">
               Quick Links
             </h3>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 text-sm">
               {['Home', 'About', 'Projects', 'Contact'].map((item) => (
                 <NavLink
                   key={item}
                   to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                  className="text-gray-400 hover:text-primary text-sm transition-colors duration-200"
+                  className="text-[color:var(--muted)] transition-colors duration-300 hover:text-[color:var(--brand)]"
                 >
                   {item}
                 </NavLink>
@@ -75,9 +71,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-300">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--muted)]">
               Connect
             </h3>
             <div className="flex space-x-4">
@@ -87,7 +82,7 @@ const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-primary transition-colors duration-200"
+                  className="text-[color:var(--muted)] transition-colors duration-300 hover:text-[color:var(--brand)]"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -97,9 +92,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-          <p className="text-gray-400 text-sm">
+        <div className="mt-8 border-t border-[color:var(--line)] pt-8 text-center">
+          <p className="text-sm text-[color:var(--muted)]">
             © {currentYear} Developer Portfolio. All rights reserved.
           </p>
         </div>

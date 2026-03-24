@@ -1,4 +1,19 @@
+import { profile } from '../data/siteData'
+import { useState } from 'react'
+import { downloadResume } from '../utils/downloadResume'
+
 const Resume = () => {
+  const [resumeError, setResumeError] = useState('')
+
+  const handleResumeDownload = async () => {
+    setResumeError('')
+    const downloaded = await downloadResume(profile.resume, profile.resumeFileName)
+
+    if (!downloaded) {
+      setResumeError('Resume file not found yet. Add resume.pdf in public/ to enable download.')
+    }
+  }
+
   const education = [
     {
       degree: 'Bachelor of Technology - Computer Science and Engineering',
@@ -33,22 +48,18 @@ const Resume = () => {
   ]
 
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-white via-gray-50/50 to-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fadeIn">
-          <h1 className="text-4xl font-bold text-dark mb-4">
-            My <span className="text-primary">Resume</span>
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+    <section className="page-shell">
+      <div className="mx-auto max-w-4xl">
+        <div className="reveal-up mb-12 text-center">
+          <h1 className="section-title mb-3">My Resume</h1>
+          <p className="section-copy mx-auto mb-8 max-w-2xl">
             A summary of my education, training, and qualifications.
           </p>
 
-          {/* Download Button */}
-          <a
-            href="/resume.pdf"
-            download
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-medium rounded-xl hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transform hover:-translate-y-1 hover:scale-105"
+          <button
+            type="button"
+            onClick={handleResumeDownload}
+            className="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-semibold"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -59,15 +70,15 @@ const Resume = () => {
               />
             </svg>
             Download Resume (PDF)
-          </a>
+          </button>
+          {resumeError && <p className="mt-3 text-sm text-[color:var(--brand-strong)]">{resumeError}</p>}
         </div>
 
-        {/* Education Section */}
-        <div className="mb-12 animate-fadeIn">
+        <div className="reveal-up mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+            <div className="glass-card flex h-10 w-10 items-center justify-center rounded-lg">
               <svg
-                className="w-5 h-5 text-green-600"
+                className="w-5 h-5 text-[color:var(--brand)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -81,32 +92,31 @@ const Resume = () => {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-dark">Education</h2>
+            <h2 className="font-display text-2xl font-semibold text-[color:var(--text)]">Education</h2>
           </div>
 
           <div className="space-y-6">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-500 transform hover:-translate-y-1"
+                className="glass-card p-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                  <h3 className="text-lg font-semibold text-dark">{edu.degree}</h3>
-                  <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{edu.duration}</span>
+                  <h3 className="text-lg font-semibold text-[color:var(--text)]">{edu.degree}</h3>
+                  <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)]">{edu.duration}</span>
                 </div>
-                <p className="text-primary font-medium mb-1">{edu.institution}</p>
-                <p className="text-sm text-gray-600 font-medium">{edu.grade}</p>
+                <p className="mb-1 font-medium text-[color:var(--brand)]">{edu.institution}</p>
+                <p className="text-sm font-medium text-[color:var(--muted)]">{edu.grade}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Training Section */}
-        <div className="mb-12 animate-fadeIn">
+        <div className="reveal-up mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
+            <div className="glass-card flex h-10 w-10 items-center justify-center rounded-lg">
               <svg
-                className="w-5 h-5 text-purple-600"
+                className="w-5 h-5 text-[color:var(--brand)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -119,24 +129,24 @@ const Resume = () => {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-dark">Training</h2>
+            <h2 className="font-display text-2xl font-semibold text-[color:var(--text)]">Training</h2>
           </div>
 
           <div className="space-y-6">
             {training.map((item, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-500 transform hover:-translate-y-1"
+                className="glass-card p-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-dark">{item.title}</h3>
-                  <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{item.duration}</span>
+                  <h3 className="text-lg font-semibold text-[color:var(--text)]">{item.title}</h3>
+                  <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)]">{item.duration}</span>
                 </div>
                 <ul className="space-y-2">
                   {item.points.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-gray-600 text-sm">
+                    <li key={idx} className="flex items-start gap-2 text-sm text-[color:var(--muted)]">
                       <svg
-                        className="w-4 h-4 text-primary mt-0.5 flex-shrink-0"
+                        className="mt-0.5 h-4 w-4 flex-shrink-0 text-[color:var(--brand)]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -157,9 +167,8 @@ const Resume = () => {
           </div>
         </div>
 
-        {/* Skills Summary */}
-        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-500">
-          <h3 className="text-lg font-semibold text-dark mb-4">Key Skills</h3>
+        <div className="glass-card p-6">
+          <h3 className="mb-4 text-lg font-semibold text-[color:var(--text)]">Key Skills</h3>
           <div className="flex flex-wrap gap-2">
             {[
               'C++',
@@ -179,7 +188,7 @@ const Resume = () => {
             ].map((skill, index) => (
               <span
                 key={index}
-                className="px-3 py-1.5 bg-blue-50 text-primary text-sm font-medium rounded-lg hover:bg-primary hover:text-white transition-all duration-300 cursor-default"
+                className="rounded-lg border border-[color:var(--line)] px-3 py-1.5 text-sm font-medium text-[color:var(--muted)]"
               >
                 {skill}
               </span>
@@ -187,7 +196,7 @@ const Resume = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

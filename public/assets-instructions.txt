@@ -1,0 +1,8 @@
+Place your static files here:
+- profile-photo.jpg (your latest photo)
+- resume.pdf (final downloadable resume)
+- project-credit-system.jpg (optional project thumbnail)
+- project-smartpdf.jpg (optional project thumbnail)
+- project-ballistic.jpg (optional project thumbnail)
+
+These files are referenced by the app as /profile-photo.jpg and /resume.pdf.

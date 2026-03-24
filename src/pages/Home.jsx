@@ -1,115 +1,104 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { profile } from '../data/siteData'
+import { downloadResume } from '../utils/downloadResume'
 
 const Home = () => {
+  const [resumeError, setResumeError] = useState('')
+
+  const handleResumeDownload = async () => {
+    setResumeError('')
+    const downloaded = await downloadResume(profile.resume, profile.resumeFileName)
+
+    if (!downloaded) {
+      setResumeError('Resume file is unavailable right now. Please check your public resume file and try again.')
+    }
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-blue-50/30 to-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center animate-fadeIn">
-          {/* Profile Image */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse"></div>
-              <div 
-                className="relative w-40 h-40 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 shadow-lg ring-4 ring-white flex items-center justify-center overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-3"
-                style={{ width: '160px', height: '160px' }}
-              >
-                {/* Girl Clipart SVG */}
-                <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Hair */}
-                  <ellipse cx="100" cy="85" rx="55" ry="60" fill="#4A3728"/>
-                  <path d="M45 85 Q45 140 70 160 Q60 120 55 85" fill="#4A3728"/>
-                  <path d="M155 85 Q155 140 130 160 Q140 120 145 85" fill="#4A3728"/>
-                  {/* Face */}
-                  <ellipse cx="100" cy="95" rx="40" ry="45" fill="#FDBCB4"/>
-                  {/* Eyes */}
-                  <ellipse cx="85" cy="90" rx="8" ry="5" fill="#4A3728"/>
-                  <ellipse cx="115" cy="90" rx="8" ry="5" fill="#4A3728"/>
-                  <circle cx="87" cy="89" r="2" fill="white"/>
-                  <circle cx="117" cy="89" r="2" fill="white"/>
-                  {/* Eyebrows */}
-                  <path d="M75 82 Q85 78 93 82" stroke="#4A3728" strokeWidth="2" fill="none"/>
-                  <path d="M107 82 Q115 78 125 82" stroke="#4A3728" strokeWidth="2" fill="none"/>
-                  {/* Nose */}
-                  <path d="M100 95 Q103 102 100 105" stroke="#E8A090" strokeWidth="2" fill="none"/>
-                  {/* Smile */}
-                  <path d="M88 115 Q100 125 112 115" stroke="#D4736A" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                  {/* Blush */}
-                  <ellipse cx="72" cy="105" rx="8" ry="5" fill="#FFB6C1" opacity="0.5"/>
-                  <ellipse cx="128" cy="105" rx="8" ry="5" fill="#FFB6C1" opacity="0.5"/>
-                  {/* Neck */}
-                  <rect x="90" y="135" width="20" height="20" fill="#FDBCB4"/>
-                  {/* Shirt */}
-                  <path d="M70 155 Q100 145 130 155 L140 200 L60 200 Z" fill="#3B82F6"/>
-                  <path d="M85 155 Q100 165 115 155" fill="#2563EB"/>
-                </svg>
-              </div>
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full border-4 border-white flex items-center justify-center animate-bounce">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            </div>
+    <section className="page-shell">
+      <div className="home-cinematic-grid grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="reveal-up">
+          <div className="social-strip mb-6 flex items-center gap-3">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-strip-item">
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-strip-item">
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3A1.97 1.97 0 003.28 4.97 1.97 1.97 0 005.25 6.94a1.97 1.97 0 001.97-1.97A1.97 1.97 0 005.25 3zm14.69 9.9c0-3.16-1.69-4.63-3.95-4.63-1.82 0-2.63 1-3.09 1.7V8.5H9.52c.05.98 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.39 1.91-1.39 1.35 0 1.89 1.03 1.89 2.54V20h3.38v-7.1z" />
+              </svg>
+            </a>
+            <span className="social-strip-line" />
+            <span className="status-badge inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] px-4 py-2 text-sm text-[color:var(--muted)]">
+              <span className="brand-dot" />
+              Open for internships and full-time roles
+            </span>
           </div>
 
-          {/* Name */}
-          <h1 className="text-4xl sm:text-5xl font-bold text-dark mb-4 animate-slideIn">
-            Faiziya <span className="text-primary bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ansari</span>
+          <h1 className="section-title mb-3 text-[color:var(--text)] hero-title">
+            Crafting products that feel bold, modern, and unforgettable.
           </h1>
-
-          {/* Role */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full mb-6 transform hover:scale-105 transition-transform duration-300">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-            <span className="text-primary font-medium">Full Stack Developer</span>
-          </div>
-
-          {/* Introduction */}
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            B.Tech CSE student at Lovely Professional University passionate about Full Stack Development. 
-            I specialize in building modern web applications using MERN stack with expertise in 
-            React.js, Node.js, and MongoDB. Always eager to learn and solve complex problems.
+          <h2 className="hero-name font-display mb-5 text-3xl font-extrabold text-[color:var(--brand)]">
+            {profile.name}
+          </h2>
+          <p className="hero-description section-copy mb-8 max-w-2xl text-base sm:text-lg leading-relaxed">
+            {profile.title} focused on expressive interfaces, stable backend systems, and performance that feels smooth from first click to deployment.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="cta-buttons flex flex-wrap gap-3">
             <Link
               to="/projects"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transform hover:-translate-y-1 hover:scale-105"
+              className="btn-primary rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
             >
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
               View Projects
             </Link>
-            <a
-              href="/resume.pdf"
-              download
-              className="group inline-flex items-center justify-center gap-2 px-8 py-3 bg-white text-dark font-medium rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+            <button
+              type="button"
+              onClick={handleResumeDownload}
+              className="btn-secondary rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
             >
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
               Download Resume
-            </a>
+            </button>
           </div>
+          {resumeError && <p className="mt-3 text-sm text-[color:var(--brand-strong)]">{resumeError}</p>}
 
-          {/* Tech Stack Preview */}
-          <div className="mt-16">
-            <p className="text-sm text-gray-400 mb-4 uppercase tracking-wider">Tech Stack</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {['React.js', 'Node.js', 'MongoDB', 'Express.js', 'Tailwind CSS', 'JavaScript'].map((tech, index) => (
-                <span
-                  key={tech}
-                  className="px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border border-gray-100 hover:border-primary hover:text-primary hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {tech}
-                </span>
-              ))}
+          <div className="tech-stack mt-10 flex flex-wrap gap-3">
+            {['React.js', 'Node.js', 'MongoDB', 'Express.js', 'Tailwind CSS', 'JavaScript'].map((tech, index) => (
+              <span
+                key={tech}
+                className="tech-stack-item rounded-full border border-[color:var(--line)] px-4 py-2 text-sm text-[color:var(--muted)] transition-all duration-300 hover:border-[color:var(--brand)] hover:text-[color:var(--brand)] hover:bg-[color:var(--brand)]/5 transform hover:scale-110 hover:-translate-y-1"
+                style={{ transitionDelay: `${index * 45}ms` }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="reveal-up delay-2 flex justify-center lg:justify-end">
+          <div className="profile-card home-visual-shell glass-card float-soft relative w-full max-w-sm p-4 overflow-hidden group">
+            <div className="home-orb home-orb-a" />
+            <div className="home-orb home-orb-b" />
+            <div className="home-chip home-chip-1">UI Design</div>
+            <div className="home-chip home-chip-2">MERN</div>
+
+            <div className="profile-image-frame relative rounded-2xl overflow-hidden border border-[color:var(--line)]/50 group-hover:border-[color:var(--brand)]/50 transition-all duration-300">
+              <img
+                src={profile.photo}
+                alt="Faiziya Ansari"
+                className="h-[28rem] w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={(event) => {
+                  event.currentTarget.src = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80'
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--brand)]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

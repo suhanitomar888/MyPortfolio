@@ -1,67 +1,36 @@
 import ProjectCard from '../components/ProjectCard'
+import { profile, projects } from '../data/siteData'
 
 const Projects = () => {
-  const projects = [
-    {
-      title: 'E-commerce Credit Profit System',
-      description:
-        'A full-stack E-commerce Credit Profile System enabling users to create credit profiles and track purchase history. Features secure authentication, product browsing, cart management, and credit-based purchase tracking with RESTful APIs.',
-      techStack: ['React.js', 'Node.js', 'MongoDB', 'Express.js', 'Tailwind CSS', 'JavaScript'],
-      githubUrl: 'https://github.com/Faiziya30',
-      liveUrl: '#',
-    },
-    {
-      title: 'SmartPDF Insight',
-      description:
-        'A user-friendly PDF analysis web app to simplify document upload, preview, and insight extraction. Helps students and professionals quickly analyze long PDFs, improving productivity and reducing manual reading time.',
-      techStack: ['React.js', 'JavaScript', 'Tailwind CSS', 'Bootstrap', 'HTML'],
-      githubUrl: 'https://github.com/Faiziya30',
-      liveUrl: '#',
-    },
-    {
-      title: 'Ballistic Recognition Tool',
-      description:
-        'A digital ballistic analysis platform to streamline case tracking and evidence management. Features evidence upload, automated matching workflows, and complete user journey from registration to analysis.',
-      techStack: ['React.js', 'JavaScript', 'CSS', 'HTML', 'PHP'],
-      githubUrl: 'https://github.com/Faiziya30',
-      liveUrl: '#',
-    },
-  ]
-
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-white via-gray-50/50 to-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 animate-fadeIn">
-          <h1 className="text-4xl font-bold text-dark mb-4">
-            My <span className="text-primary">Projects</span>
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+    <section className="page-shell">
+      <div className="projects-head reveal-up mb-12 text-center">
+        <p className="projects-kicker mb-3">Selected Work</p>
+        <h1 className="section-title mb-3">Projects That Ship Value</h1>
+        <p className="section-copy mx-auto max-w-2xl">
             A showcase of my recent work and personal projects. Each project represents a unique
             challenge and learning experience.
-          </p>
-        </div>
+        </p>
+      </div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="animate-fadeIn"
+              className="reveal-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <ProjectCard {...project} />
+              <ProjectCard index={index + 1} {...project} />
             </div>
           ))}
         </div>
 
-        {/* More Projects CTA */}
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
           <a
-            href="https://github.com/Faiziya30"
+            href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-dark text-white font-medium rounded-xl hover:bg-gray-800 transition-colors duration-200"
+            className="btn-secondary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -73,8 +42,7 @@ const Projects = () => {
             View More on GitHub
           </a>
         </div>
-      </div>
-    </div>
+    </section>
   )
 }
 
