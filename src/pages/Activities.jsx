@@ -1,27 +1,22 @@
 const Activities = () => {
   const activities = [
     {
-      title: 'Adobe India Hackathon',
-      date: 'October 2025',
-      description: 'Qualified for Round 2 and represented LPU as Team Stack Overflow.',
-      achievement: 'Round 2 Qualifier',
+      title: 'Participated in Concoction 2024 – Intra-University Tech Fusion Hackathon',
+      date: 'March 2024',
+      description: 'Collaborated in a team to build innovative tech solutions at the LPU intra-university hackathon, working across disciplines.',
+      achievement: 'View Certificate',
+      link: '/Hackathon.png',
     },
     {
-      title: 'Flipkart Runway: Season 5',
-      date: 'March 2025',
-      description: 'Cleared the online assessment through strong algorithmic performance.',
-      achievement: 'OA Cleared',
+      title: 'Secured 2nd place in a Case-Based Presentation Competition',
+      date: 'April 2024',
+      description: 'Presented a case-based analytical solution at Lovely Professional University, demonstrating strong problem-solving and data-driven presentation skills.',
+      achievement: '2nd Place Winner',
     },
     {
-      title: 'AlgoTutor DSA Training Program',
-      date: 'July 2025',
-      description: 'Completed intensive DSA training with regular competitive problem solving.',
-      achievement: 'Certificate of Completion',
-    },
-    {
-      title: 'Full Stack Development Journey',
+      title: 'Data Science & Analytics Journey',
       date: 'Ongoing',
-      description: 'Continuously building with MERN stack and practicing through coding platforms.',
+      description: 'Continuously building with Python, Power BI, Machine Learning, and practicing through real-world data projects and certifications.',
       achievement: 'Self-Driven Learning',
     },
   ]
@@ -29,9 +24,9 @@ const Activities = () => {
   return (
     <section className="page-shell">
       <header className="reveal-up mb-12 text-center">
-        <h1 className="section-title mb-3">Activities</h1>
+        <h1 className="section-title mb-3">Learning & Experiences</h1>
         <p className="section-copy mx-auto max-w-2xl">
-          Hackathons, competitions, and focused learning moments that shape how I build products.
+          Hackathons, competitions, and focused learning moments that shape how I approach data and build solutions.
         </p>
       </header>
 
@@ -43,7 +38,21 @@ const Activities = () => {
               <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-xs text-[color:var(--muted)]">{activity.date}</span>
             </div>
             <p className="my-3 text-sm text-[color:var(--muted)]">{activity.description}</p>
-            <span className="text-sm font-semibold text-[color:var(--brand)]">{activity.achievement}</span>
+            {activity.link ? (
+              <a 
+                href={activity.link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-sm font-semibold text-[color:var(--brand)] hover:underline inline-flex items-center gap-1 group"
+              >
+                {activity.achievement}
+                <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            ) : (
+              <span className="text-sm font-semibold text-[color:var(--brand)]">{activity.achievement}</span>
+            )}
           </article>
         ))}
       </div>

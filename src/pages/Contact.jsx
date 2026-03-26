@@ -34,9 +34,9 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: 'mail', label: 'Email', value: profile.email, href: `mailto:${profile.email}`, color: 'from-orange-400 to-red-500' },
-    { icon: 'github', label: 'GitHub', value: 'github.com/Faiziya30', href: profile.github, color: 'from-slate-400 to-slate-600' },
-    { icon: 'linkedin', label: 'LinkedIn', value: 'linkedin.com/in/faiziya-ansari', href: profile.linkedin, color: 'from-blue-400 to-blue-600' },
-    { icon: 'phone', label: 'Phone', value: '+91-9644033984', href: 'tel:+919644033984', color: 'from-green-400 to-emerald-600' },
+    { icon: 'github', label: 'GitHub', value: 'github.com/suhanitomar888', href: profile.github, color: 'from-slate-400 to-slate-600' },
+    { icon: 'linkedin', label: 'LinkedIn', value: 'linkedin.com/in/suhanitomar', href: profile.linkedin, color: 'from-blue-400 to-blue-600' },
+    { icon: 'phone', label: 'Phone', value: '+91-8982146219', href: 'tel:+918982146219', color: 'from-green-400 to-emerald-600' },
   ]
 
   const renderContactIcon = (icon) => {
@@ -75,11 +75,11 @@ const Contact = () => {
         <div className="mb-6 inline-flex items-center justify-center">
           <div className="contact-header-gradient absolute h-32 w-32 rounded-full blur-3xl" />
           <div className="relative">
-            <h1 className="section-title text-5xl mb-3">Let's Create Together</h1>
+            <h1 className="section-title text-5xl mb-3">Let's Connect</h1>
           </div>
         </div>
         <p className="section-copy mx-auto max-w-2xl text-lg">
-          Got an exciting project? Let's discuss ideas, collaborate, and bring something amazing to life.
+          Got an exciting project or data challenge? Let's discuss ideas, collaborate, and bring something amazing to life.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ const Contact = () => {
           <div className="reveal-up delay-1">
             <h2 className="font-display text-3xl font-bold text-[color:var(--text)] mb-2">Reach Out</h2>
             <p className="section-copy text-base leading-relaxed">
-              Whether you have a question, idea, or just want to say hello, I'm always excited to connect with creative minds.
+              Whether you have a question, data project idea, or just want to say hello, I'm always excited to connect with creative minds.
             </p>
           </div>
 

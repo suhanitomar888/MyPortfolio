@@ -13,7 +13,7 @@ const About = () => {
       <header className="reveal-up mb-12 text-center">
         <h1 className="section-title mb-3 text-5xl">About Me</h1>
         <p className="section-copy mx-auto max-w-2xl text-lg">
-          Curiosity-driven builder focused on useful products, clean systems, and meaningful details.
+          Curiosity-driven data enthusiast focused on turning raw data into actionable insights and meaningful stories.
         </p>
       </header>
 
@@ -24,8 +24,8 @@ const About = () => {
             <div className="relative rounded-2xl overflow-hidden border border-[color:var(--line)]/50 group-hover:border-[color:var(--brand)]/50 transition-all duration-300">
               <img
                 src={profile.photo}
-                alt="Faiziya Ansari"
-                className="h-[28rem] w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
+                alt="Suhani Tomar"
+                className="h-[28rem] w-full rounded-2xl object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 onError={(event) => {
                   event.currentTarget.src = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80'
                 }}
@@ -37,21 +37,24 @@ const About = () => {
 
         <div className="reveal-up delay-2 space-y-6">
           <h2 className="section-title text-3xl font-bold text-[color:var(--text)]">
-            Passionate Full Stack Developer based in {profile.location}
+            Passionate Data Science Enthusiast based in India
           </h2>
           <p className="section-copy text-base leading-relaxed">
-            I am a B.Tech CSE student at Lovely Professional University with practical experience
-            building end-to-end web apps. My focus areas are intuitive frontend systems, scalable
-            APIs, and maintainable project architecture.
+            Data is messy — I like making sense of it.
           </p>
           <p className="section-copy text-base leading-relaxed">
-            I participate in hackathons and coding competitions, and I keep improving my problem
-            solving through DSA and system design practice.
+            I’m a Computer Science student who enjoys working with data and building AI-driven solutions for real-world problems. I’m naturally curious and love uncovering patterns that others might miss.
+          </p>
+          <p className="section-copy text-base leading-relaxed">
+            Most of what I’ve learned comes from building projects — from analysing datasets to creating machine learning models and interactive dashboards. I enjoy turning ideas into something practical and meaningful.
+          </p>
+          <p className="section-copy text-base leading-relaxed">
+            Outside of academics, I’m always learning and experimenting, whether through hackathons, certifications, or trying out new tools and technologies.
           </p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="about-info-card glass-card p-5 transition-all duration-300 hover:border-[color:var(--brand)]/60 hover:shadow-lg hover:-translate-y-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--muted)] mb-2">Email</p>
-              <p className="font-semibold text-[color:var(--text)] break-all">{profile.email}</p>
+              <p className="font-semibold text-sm text-[color:var(--text)] break-words">{profile.email}</p>
             </div>
             <div className="about-info-card glass-card p-5 transition-all duration-300 hover:border-[color:var(--brand)]/60 hover:shadow-lg hover:-translate-y-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--muted)] mb-2">Status</p>

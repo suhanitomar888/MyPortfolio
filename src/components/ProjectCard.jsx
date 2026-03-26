@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 
 const ProjectCard = ({ index, title, description, techStack, githubUrl, liveUrl, previewUrl, image }) => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -12,7 +13,6 @@ const ProjectCard = ({ index, title, description, techStack, githubUrl, liveUrl,
       <article className="project-card glass-card group flex h-full flex-col overflow-hidden p-6 transition-all duration-400">
         <div className="project-card-head mb-4 flex items-center justify-between">
           <span className="project-index">{String(index || '').padStart(2, '0')}</span>
-          <span className="project-tagline">Featured build</span>
         </div>
         <div className="project-image-wrapper mb-4 flex h-44 items-center justify-center rounded-xl border border-[color:var(--line)] bg-gradient-to-br from-[color:var(--bg)] to-[color:var(--bg-secondary)] overflow-hidden relative">
           {showImage ? (
@@ -94,51 +94,66 @@ const ProjectCard = ({ index, title, description, techStack, githubUrl, liveUrl,
         </div>
       </article>
 
-      {isPreviewOpen && (
+      {isPreviewOpen && createPortal(
         <div
           className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in"
           role="dialog"
           aria-modal="true"
           onClick={() => setIsPreviewOpen(false)}
         >
-          <div className="glass-card w-full max-w-xl p-6 animate-scale-in" onClick={(event) => event.stopPropagation()}>
-            <div className="mb-4 flex items-start justify-between gap-4">
-              <h4 className="font-display text-2xl font-bold text-[color:var(--text)]">{title}</h4>
-              <button
-                onClick={() => setIsPreviewOpen(false)}
-                className="rounded-lg border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)] transition-all duration-200 hover:bg-[color:var(--line)] hover:text-[color:var(--text)]"
-              >
-                Close
-              </button>
-            </div>
-            <p className="mb-5 text-[color:var(--muted)]">{description}</p>
-            <div className="mb-5 flex flex-wrap gap-2">
-              {techStack.map((tech) => (
-                <span key={tech} className="rounded-full border border-[color:var(--line)] px-3 py-1 text-xs text-[color:var(--muted)]">
-                  {tech}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-3">
-              <a
-                href={githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium transition-all duration-300 hover:shadow-lg"
-              >
-                View on GitHub
-              </a>
-              <a
-                href={safePreviewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium transition-all duration-300 hover:shadow-lg"
-              >
-                Live Preview
-              </a>
+          <div className="glass-card w-full max-w-xl animate-scale-in flex flex-col overflow-hidden max-h-[90vh]" onClick={(event) => event.stopPropagation()}>
+            <div className="overflow-y-auto p-6 flex flex-col gap-5">
+              <div className="flex items-start justify-between gap-4 shrink-0">
+                <h4 className="font-display text-2xl font-bold text-[color:var(--text)]">{title}</h4>
+                <button
+                  onClick={() => setIsPreviewOpen(false)}
+                  className="shrink-0 rounded-lg border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)] transition-all duration-200 hover:bg-[color:var(--line)] hover:text-[color:var(--text)]"
+                >
+                  Close
+                </button>
+              </div>
+              {showImage && (
+                <div className="aspect-video w-full overflow-hidden rounded-xl border border-[color:var(--line)] shrink-0">
+                  <img src={image} alt={title} className="h-full w-full object-cover" />
+                </div>
+              )}
+              <ul className="space-y-2 text-[color:var(--muted)] shrink-0">
+                {description.split('. ').filter(Boolean).map((pt, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--brand)]" />
+                    <span>{pt.trim().endsWith('.') ? pt.trim() : pt.trim() + '.'}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap gap-2 shrink-0">
+                {techStack.map((tech) => (
+                  <span key={tech} className="rounded-full border border-[color:var(--line)] px-3 py-1 text-xs text-[color:var(--muted)]">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-3 pt-2 shrink-0">
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                >
+                  View on GitHub
+                </a>
+                <a
+                  href={safePreviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                >
+                  Live Preview
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )

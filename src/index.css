@@ -88,7 +88,7 @@ body::before {
 .section-title {
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: clamp(2rem, 4vw, 3.2rem);
-  line-height: 1.12;
+  line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
@@ -797,7 +797,30 @@ button:not(.menu-toggle):not(.theme-toggle) {
 }
 
 /* ===== FOCUS STATES ===== */
-a:focus-visible,
+/* ===== CUSTOM CURSOR CORE ===== */
+@media (min-width: 1024px) {
+  .custom-cursor-container div {
+    pointer-events: none;
+    will-change: transform;
+    transition: opacity 300ms ease, width 300ms ease, height 300ms ease, border-color 300ms ease;
+  }
+  
+  /* Scale up outer circle when hovering over interactive elements */
+  body:has(a:hover, button:hover, [role="button"]:hover, .social-strip-item:hover) .custom-cursor-container div:last-child {
+    width: 3.8rem;
+    height: 3.8rem;
+    background: color-mix(in srgb, var(--brand) 5%, #0000);
+    border-color: var(--brand);
+    border-width: 1px;
+    box-shadow: 0 0 20px color-mix(in srgb, var(--brand) 15%, #0000);
+  }
+
+  body:has(a:hover, button:hover, [role="button"]:hover, .social-strip-item:hover) .custom-cursor-container div:first-child {
+    transform: scale(1.2) translate3d(-50%, -50%, 0);
+    box-shadow: 0 0 12px var(--brand);
+  }
+}
+
 button:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;

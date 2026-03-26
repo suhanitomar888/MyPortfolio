@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ParticlesBackground from './components/ParticlesBackground'
 import Home from './pages/Home'
 import About from './pages/About'
 import Skills from './pages/Skills'
@@ -10,10 +10,9 @@ import Certificates from './pages/Certificates'
 import Activities from './pages/Activities'
 import Resume from './pages/Resume'
 import Contact from './pages/Contact'
+import CustomCursor from './components/CustomCursor'
 
 function App() {
-  const location = useLocation()
-
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
@@ -68,7 +67,7 @@ function App() {
       cancelAnimationFrame(rafId)
       observer.disconnect()
     }
-  }, [location.pathname])
+  }, [])
 
   const isDark = useMemo(() => theme === 'dark', [theme])
 
@@ -78,18 +77,18 @@ function App() {
 
   return (
     <div className="site-shell flex min-h-screen flex-col">
+      <ParticlesBackground />
+      <CustomCursor />
       <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/certificates" element={<Certificates />} />
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+      <main className="flex-grow flex flex-col gap-24 py-16">
+        <div id="home"><Home /></div>
+        <div id="about"><About /></div>
+        <div id="skills"><Skills /></div>
+        <div id="projects"><Projects /></div>
+        <div id="certificates"><Certificates /></div>
+        <div id="activities"><Activities /></div>
+        <div id="resume"><Resume /></div>
+        <div id="contact"><Contact /></div>
       </main>
       <Footer />
     </div>

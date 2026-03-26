@@ -1,53 +1,48 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
 
 const Navbar = ({ isDark, onToggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [hoveredLink, setHoveredLink] = useState(null)
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Skills', path: '/skills' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Certificates', path: '/certificates' },
-    { name: 'Activities', path: '/activities' },
-    { name: 'Resume', path: '/resume' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: '#home' },
+    { name: 'About', path: '#about' },
+    { name: 'Skills', path: '#skills' },
+    { name: 'Projects', path: '#projects' },
+    { name: 'Certificates', path: '#certificates' },
+    { name: 'Learning & Experiences', path: '#activities' },
+    { name: 'Resume', path: '#resume' },
+    { name: 'Contact', path: '#contact' },
   ]
 
   return (
     <nav className="sticky top-0 z-50 navbar-wrapper">
       <div className="mx-auto flex h-16 w-[min(1120px,92vw)] items-center justify-between">
-        <NavLink to="/" className="brand-mark" aria-label="Go to home">
+        <a href="#home" onClick={(e) => { e.preventDefault(); document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' }); }} className="brand-mark" aria-label="Go to home">
           <span className="brand-mark-core" />
           <span className="brand-mark-ring" />
-        </NavLink>
+        </a>
 
         <div className="desktop-nav-shell hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
-            <NavLink
+            <a
               key={link.name}
-              to={link.path}
+              href={link.path}
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector(link.path)?.scrollIntoView({ behavior: 'smooth' });
+              }}
               onMouseEnter={() => setHoveredLink(link.name)}
               onMouseLeave={() => setHoveredLink(null)}
-              className={({ isActive }) =>
-                `nav-link relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? 'nav-link-active'
-                    : hoveredLink === link.name
-                    ? 'nav-link-hover'
-                    : 'text-[color:var(--muted)]'
+              className={`nav-link relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  hoveredLink === link.name
+                    ? 'nav-link-hover text-[color:var(--text)]'
+                    : 'text-[color:var(--muted)] hover:text-[color:var(--text)]'
                 }`
               }
             >
-              {({ isActive }) => (
-                <>
-                  {link.name}
-                  {isActive && <span className="nav-link-underline absolute bottom-0 left-0 right-0 h-0.5" />}
-                </>
-              )}
-            </NavLink>
+              {link.name}
+            </a>
           ))}
         </div>
 
@@ -85,26 +80,23 @@ const Navbar = ({ isDark, onToggleTheme }) => {
       </div>
 
       <div
-        className={`mobile-menu overflow-hidden border-t border-[color:var(--line)] transition-all duration-300 md:hidden ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`mobile-menu overflow-hidden border-t border-[color:var(--line)] transition-all duration-300 md:hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="space-y-1 px-4 py-3">
           {navLinks.map((link) => (
-            <NavLink
+            <a
               key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `mobile-nav-link block rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? 'bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--brand-strong)] text-white shadow-lg shadow-[color:var(--brand)]/25'
-                    : 'text-[color:var(--muted)] hover:bg-[color:var(--line)] hover:text-[color:var(--text)]'
-                }`
-              }
+              href={link.path}
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector(link.path)?.scrollIntoView({ behavior: 'smooth' });
+                setIsOpen(false);
+              }}
+              className="mobile-nav-link block rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 text-[color:var(--muted)] hover:bg-[color:var(--line)] hover:text-[color:var(--text)]"
             >
               {link.name}
-            </NavLink>
+            </a>
           ))}
         </div>
       </div>

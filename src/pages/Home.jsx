@@ -1,17 +1,43 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { profile } from '../data/siteData'
-import { downloadResume } from '../utils/downloadResume'
 
 const Home = () => {
-  const [resumeError, setResumeError] = useState('')
+  const [text, setText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [loopNum, setLoopNum] = useState(0)
+  const [typingSpeed, setTypingSpeed] = useState(100)
 
-  const handleResumeDownload = async () => {
-    setResumeError('')
-    const downloaded = await downloadResume(profile.resume, profile.resumeFileName)
+  const roles = ['Data Analyst', 'ML Engineer', 'Data Scientist']
 
-    if (!downloaded) {
-      setResumeError('Resume file is unavailable right now. Please check your public resume file and try again.')
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick()
+    }, typingSpeed)
+
+    return () => clearInterval(ticker)
+  }, [text, isDeleting, loopNum, typingSpeed])
+
+  const tick = () => {
+    let i = loopNum % roles.length
+    let fullText = roles[i]
+
+    let updatedText = isDeleting
+      ? fullText.substring(0, text.length - 1)
+      : fullText.substring(0, text.length + 1)
+
+    setText(updatedText)
+
+    if (isDeleting) {
+      setTypingSpeed(50)
+    }
+
+    if (!isDeleting && updatedText === fullText) {
+      setIsDeleting(true)
+      setTypingSpeed(1000)
+    } else if (isDeleting && updatedText === '') {
+      setIsDeleting(false)
+      setLoopNum(loopNum + 1)
+      setTypingSpeed(100)
     }
   }
 
@@ -36,44 +62,32 @@ const Home = () => {
               Open for internships and full-time roles
             </span>
           </div>
-
           <h1 className="section-title mb-3 text-[color:var(--text)] hero-title">
-            Crafting products that feel bold, modern, and unforgettable.
+            I turn data into intelligent solutions using AI & analytics
           </h1>
-          <h2 className="hero-name font-display mb-5 text-3xl font-extrabold text-[color:var(--brand)]">
+          <h2 className="hero-name font-display mb-2 text-3xl font-extrabold text-[color:var(--brand)]">
             {profile.name}
           </h2>
-          <p className="hero-description section-copy mb-8 max-w-2xl text-base sm:text-lg leading-relaxed">
-            {profile.title} focused on expressive interfaces, stable backend systems, and performance that feels smooth from first click to deployment.
-          </p>
+          <div className="mb-8 font-display text-xl font-medium text-[color:var(--brand-soft)] h-7">
+            {text}
+          </div>
 
           <div className="cta-buttons flex flex-wrap gap-3">
-            <Link
-              to="/projects"
+            <a
+              href="#projects"
+              onClick={(e) => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }); }}
               className="btn-primary rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
             >
               View Projects
-            </Link>
-            <button
-              type="button"
-              onClick={handleResumeDownload}
-              className="btn-secondary rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+            </a>
+            <a
+              href="/GeneralCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 inline-flex items-center justify-center"
             >
               Download Resume
-            </button>
-          </div>
-          {resumeError && <p className="mt-3 text-sm text-[color:var(--brand-strong)]">{resumeError}</p>}
-
-          <div className="tech-stack mt-10 flex flex-wrap gap-3">
-            {['React.js', 'Node.js', 'MongoDB', 'Express.js', 'Tailwind CSS', 'JavaScript'].map((tech, index) => (
-              <span
-                key={tech}
-                className="tech-stack-item rounded-full border border-[color:var(--line)] px-4 py-2 text-sm text-[color:var(--muted)] transition-all duration-300 hover:border-[color:var(--brand)] hover:text-[color:var(--brand)] hover:bg-[color:var(--brand)]/5 transform hover:scale-110 hover:-translate-y-1"
-                style={{ transitionDelay: `${index * 45}ms` }}
-              >
-                {tech}
-              </span>
-            ))}
+            </a>
           </div>
         </div>
 
@@ -81,13 +95,13 @@ const Home = () => {
           <div className="profile-card home-visual-shell glass-card float-soft relative w-full max-w-sm p-4 overflow-hidden group">
             <div className="home-orb home-orb-a" />
             <div className="home-orb home-orb-b" />
-            <div className="home-chip home-chip-1">UI Design</div>
-            <div className="home-chip home-chip-2">MERN</div>
+            <div className="home-chip home-chip-1">Data Science</div>
+            <div className="home-chip home-chip-2">Analytics</div>
 
             <div className="profile-image-frame relative rounded-2xl overflow-hidden border border-[color:var(--line)]/50 group-hover:border-[color:var(--brand)]/50 transition-all duration-300">
               <img
-                src={profile.photo}
-                alt="Faiziya Ansari"
+                src="/Pic.jpeg"
+                alt="Suhani Tomar"
                 className="h-[28rem] w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
                 onError={(event) => {
                   event.currentTarget.src = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80'

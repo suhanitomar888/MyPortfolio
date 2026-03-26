@@ -1,49 +1,43 @@
-import { profile } from '../data/siteData'
 import { useState } from 'react'
-import { downloadResume } from '../utils/downloadResume'
 
 const Resume = () => {
-  const [resumeError, setResumeError] = useState('')
+  const [openIndex, setOpenIndex] = useState(null)
 
-  const handleResumeDownload = async () => {
-    setResumeError('')
-    const downloaded = await downloadResume(profile.resume, profile.resumeFileName)
-
-    if (!downloaded) {
-      setResumeError('Resume file not found yet. Add resume.pdf in public/ to enable download.')
-    }
+  const toggleEducation = (index) => {
+    setOpenIndex((prev) => (prev === index ? null : index))
   }
 
   const education = [
     {
       degree: 'Bachelor of Technology - Computer Science and Engineering',
       institution: 'Lovely Professional University, Phagwara, Punjab',
-      duration: 'August 2023 - Present',
-      grade: 'CGPA: 8.49',
+      duration: 'Aug 2023 - Present',
+      grade: 'CGPA: 7.1',
     },
     {
       degree: 'Intermediate (12th)',
-      institution: 'Shri Kanwartara Public Higher Secondary School, Khargone, MP',
-      duration: 'March 2023',
-      grade: 'Percentage: 82.4%',
+      institution: 'Silver Bells School, Gwalior, Madhya Pradesh',
+      duration: 'Apr 2022 - Mar 2023',
+      grade: 'Percentage: 66',
     },
     {
       degree: 'Matriculation (10th)',
-      institution: 'Shri Kanwartara Public Higher Secondary School, Khargone, MP',
-      duration: 'March 2021',
-      grade: 'Percentage: 92.6%',
+      institution: 'Delhi Public School, Hisar, Haryana',
+      duration: 'Apr 2020 - Mar 2021',
+      grade: 'Percentage: 87.4',
     },
   ]
 
   const training = [
     {
-      title: 'AlgoTutor - Summer Training Program on DSA',
-      duration: 'July 2025',
+      title: 'From Data to Decision: A Hands-On Approach to Data Science | LPU',
+      duration: 'Jun 2025 - Jul 2025',
       points: [
-        'Enhanced ability to analyze problems logically and choose the most efficient solution approach',
-        'Improved confidence in tackling complex DSA questions through consistent practice',
-        'Strengthened competitive programming skills for faster reasoning and cleaner code',
+        'Completed an intensive summer training focused on applying data science concepts to real-world datasets, covering the full analytics pipeline from data extraction to predictive modeling.',
+        'Strengthened practical skills in data cleaning, exploratory data analysis, dashboard development, and predictive modeling, with a strong emphasis on interpreting data and communicating insights.',
+        'Tech: SQL, Microsoft Excel, Power BI, Python Libraries, Machine Learning Models',
       ],
+      credentialUrl: 'https://files.lpu.in/umsweb/skilldevcourse/SkillDevelopmentCertificates/12318295_846_20_08_2025.pdf?_gl=1*z9o2uq*_gcl_au*NzYyNDU2OS4xNzczMTU1MDAx',
     },
   ]
 
@@ -56,9 +50,10 @@ const Resume = () => {
             A summary of my education, training, and qualifications.
           </p>
 
-          <button
-            type="button"
-            onClick={handleResumeDownload}
+          <a
+            href="/GeneralCV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-semibold"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,8 +65,7 @@ const Resume = () => {
               />
             </svg>
             Download Resume (PDF)
-          </button>
-          {resumeError && <p className="mt-3 text-sm text-[color:var(--brand-strong)]">{resumeError}</p>}
+          </a>
         </div>
 
         <div className="reveal-up mb-12">
@@ -99,14 +93,27 @@ const Resume = () => {
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="glass-card p-6"
+                className="glass-card p-6 cursor-pointer select-none"
+                onClick={() => toggleEducation(index)}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                   <h3 className="text-lg font-semibold text-[color:var(--text)]">{edu.degree}</h3>
-                  <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)]">{edu.duration}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)]">{edu.duration}</span>
+                    <span className="text-sm text-[color:var(--muted)] transition-transform duration-300" style={{ display: 'inline-block', transform: openIndex === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
+                  </div>
                 </div>
                 <p className="mb-1 font-medium text-[color:var(--brand)]">{edu.institution}</p>
-                <p className="text-sm font-medium text-[color:var(--muted)]">{edu.grade}</p>
+                <div
+                  style={{
+                    maxHeight: openIndex === index ? '60px' : '0px',
+                    opacity: openIndex === index ? 1 : 0,
+                    overflow: 'hidden',
+                    transition: 'max-height 0.35s ease, opacity 0.3s ease',
+                  }}
+                >
+                  <p className="text-sm font-medium text-[color:var(--muted)] mt-2">{edu.grade}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -142,7 +149,7 @@ const Resume = () => {
                   <h3 className="text-lg font-semibold text-[color:var(--text)]">{item.title}</h3>
                   <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-sm text-[color:var(--muted)]">{item.duration}</span>
                 </div>
-                <ul className="space-y-2">
+                <ul className="space-y-2 mb-4">
                   {item.points.map((point, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm text-[color:var(--muted)]">
                       <svg
@@ -162,39 +169,27 @@ const Resume = () => {
                     </li>
                   ))}
                 </ul>
+                {item.credentialUrl && (
+                  <div className="mt-2 text-left">
+                    <a 
+                      href={item.credentialUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center gap-2 rounded-lg border border-[color:var(--line)] bg-[color:var(--bg-secondary)] px-4 py-2 text-xs font-semibold text-[color:var(--text)] transition-all duration-300 hover:border-[color:var(--brand)] hover:text-[color:var(--brand)] hover:shadow-md"
+                    >
+                      View Certificate
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
 
-        <div className="glass-card p-6">
-          <h3 className="mb-4 text-lg font-semibold text-[color:var(--text)]">Key Skills</h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              'C++',
-              'JavaScript',
-              'React.js',
-              'Node.js',
-              'Express.js',
-              'MongoDB',
-              'MySQL',
-              'Tailwind CSS',
-              'Git',
-              'GitHub',
-              'Docker',
-              'REST APIs',
-              'DSA',
-              'OOPS',
-            ].map((skill, index) => (
-              <span
-                key={index}
-                className="rounded-lg border border-[color:var(--line)] px-3 py-1.5 text-sm font-medium text-[color:var(--muted)]"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
+
       </div>
     </section>
   )
